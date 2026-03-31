@@ -1,0 +1,8 @@
+.attendance_env/
+.venv/
+.venvattend/
+venv/
+__pycache__/
+*.py[cod]
+.aider*
+.env

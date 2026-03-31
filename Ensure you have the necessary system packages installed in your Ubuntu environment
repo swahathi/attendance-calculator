@@ -1,0 +1,5 @@
+# Install Tesseract OCR for the image processing service
+sudo apt-get update
+sudo apt-get install tesseract-ocr
+sudo apt-get install libtesseract-dev
+sudo apt-get install libgl1-mesa-glx  # Required for OpenCV
