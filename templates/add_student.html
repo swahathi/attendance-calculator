@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Add Student</title></head>
+<body>
+    <h2>Add New Student</h2>
+    <form method="POST">
+        <input type="text" name="student_name" placeholder="Student Full Name" required><br><br>
+        <input type="text" name="student_roll_id" placeholder="Roll Number / ID" required><br><br>
+        <input type="email" name="email" placeholder="Email (Optional)"><br><br>
+        <input type="text" name="phone" placeholder="Phone (Optional)"><br><br>
+        <button type="submit">Add Student</button>
+    </form>
+    <p><a href="{{ url_for('index') }}">Back to Home</a></p>
+</body>
+</html>

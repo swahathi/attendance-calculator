@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Register College{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-4">Register College</h2>
+            
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" class="needs-validation">
+                <div class="mb-3">
+                    <label for="college_name" class="form-label">College Name *</label>
+                    <input type="text" class="form-control" id="college_name" name="college_name" 
+                           placeholder="e.g., ABC Engineering College" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="college_code" class="form-label">College Code *</label>
+                    <input type="text" class="form-control" id="college_code" name="college_code" 
+                           placeholder="e.g., ABC-2025" required>
+                    <small class="text-muted">Unique identifier for your college</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" 
+                           placeholder="college@example.com">
+                </div>
+
+                <div class="mb-3">
+                    <label for="contact_person" class="form-label">Contact Person</label>
+                    <input type="text" class="form-control" id="contact_person" name="contact_person" 
+                           placeholder="Name of administrator">
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Register College</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary w-100 mt-2">Back to Home</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Bootstrap form validation
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+{% endblock %}

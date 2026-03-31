@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Semester Calendar{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0 h4">Upload Semester Calendar</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <h5>📄 Calendar Upload Instructions</h5>
+                        <ul class="mb-0">
+                            <li>Upload your semester calendar as a **PDF file**.</li>
+                            <li>The system uses OCR to extract holidays and working days.</li>
+                            <li>Weekend Days: Use abbreviations (e.g., Sun, Sat).</li>
+                        </ul>
+                    </div>
+
+                    <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="semester_name" class="form-label">Semester Name *</label>
+                            <input type="text" class="form-control" id="semester_name" name="semester_name" 
+                                   placeholder="e.g., Sem 4, Odd 2026" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="semester_start" class="form-label">Semester Start Date *</label>
+                                <input type="date" class="form-control" id="semester_start" name="semester_start" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="semester_end" class="form-label">Semester End Date *</label>
+                                <input type="date" class="form-control" id="semester_end" name="semester_end" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="weekend_days" class="form-label">Weekend Days (Comma separated)</label>
+                            <input type="text" class="form-control" id="weekend_days" name="weekend_days" 
+                                   placeholder="Sun,Sat" value="Sun">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="file" class="form-label">Calendar PDF File *</label>
+                            <input type="file" class="form-control" id="file" name="file" accept=".pdf" required>
+                        </div>
+
+                        <div id="file-preview" class="alert alert-secondary d-none">
+                            <strong>Selected File:</strong> <span id="filename"></span><br>
+                            <strong>File Size:</strong> <span id="filesize"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Process & Store Calendar</button>
+                            <a href="{{ url_for('index') }}" class="btn btn-light">Back to Home</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // File preview logic
+    document.getElementById('file').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            document.getElementById('filename').textContent = file.name;
+            document.getElementById('filesize').textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+            document.getElementById('file-preview').classList.remove('d-none');
+        }
+    });
+
+    // Bootstrap validation
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="p-5 mb-4 bg-white rounded-4 shadow-sm border text-center">
+        <h1 class="display-5 fw-bold">Welcome, {{ session['user_name'] }}!</h1>
+        <p class="lead text-muted">Your personal attendance dashboard for <strong>{{ session['user_college'] }}</strong>.</p>
+        <hr class="my-4 mx-auto" style="width: 20%;">
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center">
+                    <div class="display-6 mb-3">📊</div>
+                    <h5 class="card-title">Attendance</h5>
+                    <p class="card-text text-muted">Calculate your current percentage and see if you meet the 75% goal.</p>
+                    <a href="{{ url_for('attendance') }}" class="btn btn-primary px-4">Check Now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center">
+                    <div class="display-6 mb-3">⏱️</div>
+                    <h5 class="card-title">Period Weights</h5>
+                    <p class="card-text text-muted">Upload your timetable image to find out which subjects are most important.</p>
+                    <a href="{{ url_for('weights') }}" class="btn btn-info text-white px-4">Analyze Image</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center">
+                    <div class="display-6 mb-3">📅</div>
+                    <h5 class="card-title">Calendar</h5>
+                    <p class="card-text text-muted">Check upcoming holidays and total working days for this semester.</p>
+                    <a href="{{ url_for('show_calendar') }}" class="btn btn-success px-4">View Calendar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion mt-4" id="adminAccordion">
+        <div class="accordion-item shadow-sm border-0">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#adminOptions">
+                    🎓 Admin & Setup Tools
+                </button>
+            </h2>
+            <div id="adminOptions" class="accordion-collapse collapse" data-bs-parent="#adminAccordion">
+                <div class="accordion-body">
+                    <p class="small text-muted">If your college or semester isn't listed, use these tools to set it up.</p>
+                    <a href="{{ url_for('signup') }}" class="btn btn-outline-warning btn-sm me-2">Register New College</a>
+                    <a href="{{ url_for('upload_calendar') }}" class="btn btn-outline-warning btn-sm">Upload New Calendar (PDF)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

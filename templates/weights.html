@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-10">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h2 class="h5 mb-0">Timetable Weight Extractor</h2>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-light border">
+                    <p class="mb-0"><strong>How it works:</strong> Upload your weekly timetable. The system will count the periods for each subject and calculate its <em>Impact Weight</em> on your total attendance.</p>
+                </div>
+
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="timetable" class="form-label">Upload Timetable (Image or PDF)</label>
+                        <input class="form-control" type="file" id="timetable" name="timetable" accept="image/*, .pdf" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Upload & Calculate Weights</button>
+                </form>
+
+                {% if data and data.weights %}
+                <hr>
+                <div class="mt-4">
+                    <h3>Computed Weights</h3>
+                    <div class="badge bg-primary mb-3">Total periods in a week: {{ data.total_periods }}</div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Periods/Week</th>
+                                    <th>Weight Factor</th>
+                                    <th>Impact %</th>
+                                    <th>Calculation Logic</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for subject, details in data.weights.items() %}
+                                <tr>
+                                    <td class="fw-bold">{{ subject }}</td>
+                                    <td>{{ details.periods }}</td>
+                                    <td>{{ details.weight | round(4) }}</td>
+                                    <td>{{ details.percentage | round(2) }}%</td>
+                                    <td><code class="text-muted">{{ details.formula }}</code></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% elif request.method == 'POST' %}
+                <div class="alert alert-warning mt-3">
+                    No subjects could be clearly identified. Please ensure the image is clear and contains a standard timetable grid.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

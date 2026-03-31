@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <h2 class="h5 mb-0">Attendance Calculator</h2>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="present" class="form-label">Days Present</label>
+                        <input type="number" class="form-control" id="present" name="present" 
+                               placeholder="Enter total days you attended" required>
+                        <small class="text-muted">We will compare this against the college calendar.</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Calculate Status</button>
+                </form>
+
+                {% if result %}
+                <hr>
+                <div class="result-section">
+                    <h4>Semester: {{ result.semester_name }}</h4>
+                    <table class="table table-sm">
+                        <tr>
+                            <td>Total Working Days:</td>
+                            <th class="text-end">{{ result.working_days_count }}</th>
+                        </tr>
+                        <tr>
+                            <td>Days You Attended:</td>
+                            <th class="text-end">{{ result.present_days }}</th>
+                        </tr>
+                        <tr>
+                            <td>Attendance Percentage:</td>
+                            <th class="text-end">{{ result.percentage }}%</th>
+                        </tr>
+                    </table>
+
+                    {% if result.status == "Shortage" %}
+                        <div class="alert alert-danger">
+                            <strong>⚠️ Shortage!</strong><br>
+                            Your attendance is below 75%. You need to attend 
+                            <strong>{{ result.required_days }}</strong> more days consecutively to be safe.
+                        </div>
+                    {% else %}
+                        <div class="alert alert-success">
+                            <strong>✅ Safe!</strong><br>
+                            Your attendance is good. You can safely bunk 
+                            <strong>{{ result.bunk_allowed }}</strong> more days before hitting the limit.
+                        </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
